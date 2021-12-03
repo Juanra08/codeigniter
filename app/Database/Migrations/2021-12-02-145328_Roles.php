@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Categories extends Migration
+class Roles extends Migration
 {
     public function up()
     {
@@ -28,14 +28,15 @@ class Categories extends Migration
                 'null'       => true,
             ]
             
-        ]);
-
+            ]);
+            
         $this->forge->addPrimaryKey('id',true);
-        $this->forge->createTable('Categories');
+        $this->forge->createTable('Roles');
     }
 
     public function down()
     {
-        $this->forge->dropTable('Categories');
+        $this->forge->dropTable('Roles');
+
     }
 }
