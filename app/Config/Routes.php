@@ -54,6 +54,9 @@ $routes->group("admin",function ($routes){
 $routes->get('home', 'HomeController::index',['as' => "admin","namespace" => ADMIN_NAMESPACE]);
 });
 
+$routes->get('/pruebaAjax', 'PruebaController::pruebaAjax',['as' => "prueba_ajax"]);
+
+
 
 
 

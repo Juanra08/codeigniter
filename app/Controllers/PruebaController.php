@@ -34,4 +34,23 @@ class PruebaController extends BaseController
 
         return view("contacto",$data);
     }
+
+    public function pruebaAjax(){
+        
+        $response = [
+            "status" => "OK",
+            "message" => "Ha ido bien",
+            "data" => ""
+        ];
+        
+        try{
+            return json_encode($response);
+
+        } catch(\Exception $e){
+            $response["status"] = "KO";
+            $response["message"] = "Ha ido mal";
+            return json_encode($response);
+        }
+        
+    }
 }
