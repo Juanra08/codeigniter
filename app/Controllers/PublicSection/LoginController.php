@@ -10,4 +10,16 @@ class LoginController extends BaseController
     {
         return view("PublicSection/login");
     }
+
+    public function showFormLogin(){
+
+        // $user=[
+        //     [
+        //         'username' =>
+        //         'password'
+        //     ]
+        //     ]
+
+    
+    }
 }
