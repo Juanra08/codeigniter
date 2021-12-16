@@ -47,6 +47,7 @@ $routes->get('/contacto', 'PruebaController::contacto',['as' => "contacto_page"]
 
 $routes->group("",function ($routes){
     $routes->get('login', 'LoginController::index',['as' => "login","namespace" => PUBLIC_NAMESPACE]);
+    $routes->post('login', 'LoginController::login',['as' => "login_ajax","namespace" => PUBLIC_NAMESPACE]);
     $routes->get('home', 'HomeController::index',['as' => "home","namespace" => PUBLIC_NAMESPACE]);
 });
 

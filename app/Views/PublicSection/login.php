@@ -7,6 +7,42 @@
 <?= $this->section('css')?>
 <?= $this->endSection()?> 
 
+<?= $this->section('js')?>
+<script>
+  $('#login').on("submit",function(event){
+
+    event.preventDefault();
+
+    let data = new FormData(this);
+
+    $.ajax({
+        url: "<?= route_to('login_ajax') ?>",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false, 
+            async: true,
+            timeout: 100000,
+            beforeSend: (xhr) => {},
+            success: (response) => {
+
+              $(this).trigger("reset");
+
+              alert("Funciona la peticion");
+
+              console.log(response);
+            },
+            error:(xhr,status,error) => {
+              alert("No va");
+            },
+            complete: () => {}
+    });
+
+  })
+</script>
+
+<?= $this->endsection() ?>
+
 <?= $this->section('content')?>
 
 <div class="wrapper fadeInDown">
@@ -20,9 +56,9 @@
 
     <!-- Login Form -->
     <form id="login">
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
+      <input type="text" id="username" class="fadeIn second" name="username" placeholder="username" require>
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="password" require>
+      <button type="submit" class="fadeIn fourth" >Log In</button>
     </form>
 
     <!-- Remind Passowrd -->
