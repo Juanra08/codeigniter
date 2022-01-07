@@ -3,18 +3,14 @@
 namespace App\Controllers\PublicSection;
 
 use App\Controllers\BaseController;
-
 use App\Models\UsersModel;
+use App\Libraries\UtilLibrary;
 
 class LoginController extends BaseController
 {
     public function index()
     {
         return view("PublicSection/login");
-    }
-
-    public function showFormLogin(){
-
     }
 
     public function login() {
@@ -25,22 +21,14 @@ class LoginController extends BaseController
         $password = $request->getVar("password");
 
         $users = new UsersModel();
-
-        $allUsers = $users->findAll();
-
-        $response = [
-            "status" => "OK",
-            "message" => "Ha ido bien",
-            "data" => ""
-        ];
+        $util = new UtilLibrary();
         
-        try{
-            return json_encode($response);
+        $userExist = $users->checkUser($username);
 
-        } catch(\Exception $e){
-            $response["status"] = "KO";
-            $response["message"] = "Ha ido mal";
-            return json_encode($response);
+        if ($userExist != null) {
+            return $util->getResponse('OK', 'Login correcto');;
+        } else {
+            return $util->getResponse('KO', 'Login incorrecto');;
         }
     }
 }

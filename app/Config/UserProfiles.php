@@ -6,7 +6,6 @@ use CodeIgniter\Config\BaseConfig;
 
 class UserProfiles extends BaseConfig
 {
-    //
 
     //-----Privada-----
 

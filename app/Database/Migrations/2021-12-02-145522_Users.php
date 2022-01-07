@@ -40,6 +40,18 @@ class Users extends Migration
                 'constraint' => 5,
                 'unsigned'   => true,
                 'null'       => true,
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => false,
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
             ]
             
             ]);
