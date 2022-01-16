@@ -20,23 +20,27 @@ class FestivalsSeeder extends Seeder
 
         $festivals = [
             [
-                'username' => $faker->username,
-                'email' => "admin@test.com",
-                'password' => "1234",
-                'name' => $faker->name,
-                'surname' => $faker->name,
-                'created_at' => new Time(),
-                'role_id' => 1
+                'name'   => $faker->name,
+                'email'      => 'admin@test.com',
+                'date'   => new Time(),
+                'price'       => 10,
+                'address'    => $faker->address,
+                'image_url'    => 'an url',
+                'category_id' => 1,
+                'created_at' => new Time('now', 'Europe/Madrid', 'es_ES'),
             ],
             [
-                'username' => $faker->username,
-                'email' => "client@test.com",
-                'password' => "1234",
-                'name' => $faker->name,
-                'surname' => $faker->name,
-                'created_at' => new Time(),
-                'role_id' => 2
-            ],
+                'name'   => $faker->name,
+                'email'      => $faker->email,
+                'date'   => new Time(),
+                'price'       => 10,
+                'address'    => $faker->address,
+                'image_url'    => 'an url',
+                'category_id' => 2,
+                'created_at' => new Time('now', 'Europe/Madrid', 'es_ES'),
+            ]
         ];
+
+        $festivalsBuilder->insertBatch($festivals);
     }
 }

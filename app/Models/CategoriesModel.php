@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Exception;
+use App\Entities\Categories;
 
 class CategoriesModel extends Model
 {
@@ -20,20 +22,22 @@ class CategoriesModel extends Model
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    // Validation
-    // protected $validationRules      = [];
-    // protected $validationMessages   = [];
-    // protected $skipValidation       = false;
-    // protected $cleanValidationRules = true;
+    public function findCategories() {
+        return $this->findAll();
+    }
 
-    // Callbacks
-    // protected $allowCallbacks = true;
-    // protected $beforeInsert   = [];
-    // protected $afterInsert    = [];
-    // protected $beforeUpdate   = [];
-    // protected $afterUpdate    = [];
-    // protected $beforeFind     = [];
-    // protected $afterFind      = [];
-    // protected $beforeDelete   = [];
-    // protected $afterDelete    = [];
+    public function findCategoriesById($id) {
+        return $this->where(['id' => $id])
+                    ->first();
+    }
+
+    public function deleteCategory($id) {
+        try {
+            $this->where('id', $id)
+                ->delete();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }        
+    }
 }

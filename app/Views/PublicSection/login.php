@@ -1,3 +1,7 @@
+<?php
+    use Config\UserProfiles; 
+?>
+
 <?= $this->extend('PublicSection/base_layout')?>
 
 <?= $this->section('title')?>
@@ -23,14 +27,20 @@
             contentType: false, 
             async: true,
             timeout: 100000,
+            dataType: 'json',
             beforeSend: (xhr) => {},
             success: (response) => {
 
               $(this).trigger("reset");
+              
+              alert("funciona el response")
 
-              alert("Funciona la peticion");
+              if (response.data.role == '<?= UserProfiles::ADMIN_ROLE ?>') {
+                window.location.replace('<?= route_to('admin') ?>');
+              } else if (response.data.role == '<?= UserProfiles::APP_CLIENT_ROLE ?>') {
+                window.location.replace('<?= route_to('home') ?>');
+              }
 
-              console.log(response);
             },
             error:(xhr,status,error) => {
               alert("No va");

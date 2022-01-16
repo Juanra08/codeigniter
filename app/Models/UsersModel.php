@@ -29,4 +29,9 @@ class UsersModel extends Model
         
         return $result;
     }
+
+    public function usersDatatable($limitStart, $limitLenght) {
+        return $this->limit($limitLenght, $limitStart)
+                    ->find();
+    }
 }

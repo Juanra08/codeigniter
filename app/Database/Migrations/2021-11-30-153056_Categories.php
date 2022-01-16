@@ -26,6 +26,10 @@ class Categories extends Migration
             'updated_at' => [
                 'type'       => 'DATETIME',
                 'null'       => true,
+            ],
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
             ]
             
         ]);

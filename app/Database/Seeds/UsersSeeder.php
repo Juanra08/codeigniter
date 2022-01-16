@@ -3,7 +3,6 @@
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
-
 use CodeIgniter\I18n\Time;
 use Faker\Factory;
 
@@ -22,21 +21,21 @@ class UsersSeeder extends Seeder
             [
                 'username' => $faker->username,
                 'email' => "admin@test.com",
-                'password' => "1234",
+                'password' => password_hash('1234', 1),
                 'name' => $faker->name,
-                'surname' => $faker->name,
                 'created_at' => new Time(),
-                'role_id' => 1
+                'rol_id' => 1
             ],
             [
                 'username' => $faker->username,
                 'email' => "client@test.com",
-                'password' => "1234",
+                'password' => password_hash('1234', 1),
                 'name' => $faker->name,
-                'surname' => $faker->name,
                 'created_at' => new Time(),
-                'role_id' => 2
+                'rol_id' => 2
             ],
         ];
+
+        $usersBuilder->insertBatch($users);
     }
 }

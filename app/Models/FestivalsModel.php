@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Database\Migrations\Festivals;
 use CodeIgniter\Model;
+use Exception;
+use App\Entities\Festivals;
 
 class FestivalsModel extends Model
 {
@@ -12,29 +13,30 @@ class FestivalsModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = Festivals::class;
     protected $useSoftDeletes   = true;
-    protected $allowedFields    = ['name'];
-
+    protected $allowedFields    = ['name','email','date','price','address','image_url','category_id'];
     // Dates
-    protected $useTimestamps = false;
-
+    protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    // Validation
-    // protected $validationRules      = [];
-    // protected $validationMessages   = [];
-    // protected $skipValidation       = false;
-    // protected $cleanValidationRules = true;
+    public function findFestivalsDatatable($limitStart, $limitLenght) {
+        return $this->limit($limitLenght, $limitStart)
+                    ->find();
+    }
 
-    // Callbacks
-    // protected $allowCallbacks = true;
-    // protected $beforeInsert   = [];
-    // protected $afterInsert    = [];
-    // protected $beforeUpdate   = [];
-    // protected $afterUpdate    = [];
-    // protected $beforeFind     = [];
-    // protected $afterFind      = [];
-    // protected $beforeDelete   = [];
-    // protected $afterDelete    = [];
+    public function deleteFestival($id) {
+        try {
+            $this->where('id', $id)
+                ->delete();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }        
+    }
+
+    public function findFestivals($id) {
+        return $this->where(['id' => $id])
+                    ->first();
+    }
 }

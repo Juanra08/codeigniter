@@ -47,20 +47,32 @@ class Festivals extends Migration
                 'constraint' => 5,
                 'unsigned'   => true,
                 'null'       => true,
-            ]
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => false,
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+            ],
             
             ]);
 
         $this->forge->addPrimaryKey('id',true);
         $this->forge->addForeignKey('category_id','Categories','id','CASCADE','SET NULL');
-        $this->forge->createTable('Festivals');
+        $this->forge->createTable('festivals');
 
         $this->db->enableForeignKeyChecks();
     }
 
     public function down()
     {
-        $this->forge->dropTable('Festivals');
+        $this->forge->dropTable('festivals');
 
     }
 }

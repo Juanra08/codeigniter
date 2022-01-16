@@ -17,7 +17,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
+$routes->setDefaultController('LoginController');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -30,6 +30,8 @@ if(!defined('ADMIN_NAMESPACE'))define('ADMIN_NAMESPACE',"App\Controllers\Adminis
 
 if(!defined('PUBLIC_NAMESPACE'))define('PUBLIC_NAMESPACE',"App\Controllers\PublicSection") ;
 
+if(!defined('REST_NAMESPACE'))define('REST_NAMESPACE',"App\Controllers\Rest") ;
+
 
 /*
  * --------------------------------------------------------------------
@@ -39,26 +41,51 @@ if(!defined('PUBLIC_NAMESPACE'))define('PUBLIC_NAMESPACE',"App\Controllers\Publi
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
 $routes->get('/prueba', 'PruebaController::index',['as' => "prueba_page"]);
 $routes->get('/parametro/(:any)', 'PruebaController::parametro/$1');
 
 $routes->get('/contacto', 'PruebaController::contacto',['as' => "contacto_page"]);
 
 $routes->group("",function ($routes){
-    $routes->get('login', 'LoginController::index',['as' => "login","namespace" => PUBLIC_NAMESPACE]);
+    $routes->get('/', 'LoginController::index',['as' => "login",'filter' => 'login_auth',"namespace" => PUBLIC_NAMESPACE]);
     $routes->post('login', 'LoginController::login',['as' => "login_ajax","namespace" => PUBLIC_NAMESPACE]);
-    $routes->get('home', 'HomeController::index',['as' => "home","namespace" => PUBLIC_NAMESPACE]);
+    $routes->get('home', 'HomeController::index',['as' => "home",'filter' => 'public_auth',"namespace" => PUBLIC_NAMESPACE]);
 });
 
 $routes->group("admin",function ($routes){
-$routes->get('home', 'HomeController::index',['as' => "admin","namespace" => ADMIN_NAMESPACE]);
+$routes->get('home', 'HomeController::index',['as' => "admin",'filter' => 'private_auth',"namespace" => ADMIN_NAMESPACE]);
+$routes->get('festivals', 'FestivalsController::index', ['as' => 'festival_admin', 'filter' => 'private_auth', 'namespace' => ADMIN_NAMESPACE]);
+$routes->get('categories', 'CategoriesController::index', ['as' => 'categories_admin', 'filter' => 'private_auth', 'namespace' => ADMIN_NAMESPACE]);
+$routes->get('users', 'UsersController::index', ['as' => 'users_admin', 'filter' => 'private_auth', 'namespace' => ADMIN_NAMESPACE]);
+$routes->get('roles', 'RolesController::index', ['as' => 'roles_admin', 'filter' => 'private_auth', 'namespace' => ADMIN_NAMESPACE]);
 });
 
 $routes->get('/pruebaAjax', 'PruebaController::pruebaAjax',['as' => "prueba_ajax"]);
 
+//---------------datatables------------------
 
+$routes->post('festivals_data', 'FestivalsController::getFestivalsData', ['as' => 'festivals_data', 'filter' => 'private_auth', 'namespace' => ADMIN_NAMESPACE]);
 
+//---------------Delete-----------------
+$routes->delete('delete_festival', 'FestivalsController::deleteFestival', ['as' => 'delete_festival', 'namespace' => ADMIN_NAMESPACE]);
+
+//--------------Crear/editar----------------
+
+$routes->get('festivals/view/edit', 'FestivalsController::viewEditFestival', ['as' => 'festivals_view_edit', 'namespace' => ADMIN_NAMESPACE]);
+$routes->get('festivals/view/edit/(:any)', 'FestivalsController::viewEditFestival/$1', ['as' => 'festivals_view_edit/1$', 'namespace' => ADMIN_NAMESPACE]);
+
+$routes->post('festivals', 'FestivalsController::saveFestival', ['as' => 'festivals_save', 'namespace' => ADMIN_NAMESPACE]);
+
+//ApiRest----------------------------------
+
+$routes->group('rest', function ($routes) {
+    $routes->get('categories/(:any)', 'CategoriesController::getCategories/$1', ['namespace' => REST_NAMESPACE]);
+    $routes->get('categories', 'CategoriesController::getCategories', ['namespace' => REST_NAMESPACE]);
+    $routes->delete('categories', 'CategoriesController::deleteCategories', ['namespace' => REST_NAMESPACE]);
+    $routes->post('categories', 'CategoriesController::saveCategories', ['namespace' => REST_NAMESPACE]);
+});
+
+//-----------------------------------------
 
 
 /*
