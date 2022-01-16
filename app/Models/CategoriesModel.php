@@ -13,7 +13,7 @@ class CategoriesModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = Categories::class;
     protected $useSoftDeletes   = true;
-    protected $allowedFields    = ['title'];
+    protected $allowedFields    = ['name'];
 
     // Dates
     protected $useTimestamps = false;
@@ -39,5 +39,14 @@ class CategoriesModel extends Model
         } catch (Exception $e) {
             return false;
         }        
+    }
+
+    public function saveCategory($data) {
+        try {
+            $this->insert($data);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }      
     }
 }

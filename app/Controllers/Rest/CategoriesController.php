@@ -78,12 +78,11 @@ class CategoriesController extends ResourceController
 
             $request = $this->request;
             $data = $request->getJSON();
-            $id = $data->id;
 
-            $delete = $this->model->deleteCategory($id);
-
-            if ($delete) {
-                return $this->respond("", 200, 'Categoria eliminada');
+            $save = $this->model->saveCategory($data);
+            
+            if ($save) {
+                return $this->respond("", 200, 'Categoria guardada');
             }else {
                 return $this->respond('', 404, 'Categoria no encontrada');
             }
