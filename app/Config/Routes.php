@@ -32,6 +32,9 @@ if(!defined('PUBLIC_NAMESPACE'))define('PUBLIC_NAMESPACE',"App\Controllers\Publi
 
 if(!defined('REST_NAMESPACE'))define('REST_NAMESPACE',"App\Controllers\Rest") ;
 
+if(!defined('COMMAND_NAMESPACE'))define('COMMAND_NAMESPACE', 'App\Controllers\Command');
+
+
 
 /*
  * --------------------------------------------------------------------
@@ -84,6 +87,15 @@ $routes->group('rest', function ($routes) {
     $routes->delete('categories', 'CategoriesController::deleteCategories', ['namespace' => REST_NAMESPACE]);
     $routes->post('categories', 'CategoriesController::saveCategories', ['namespace' => REST_NAMESPACE]);
 });
+
+//command------------------------------------
+
+$routes->group('commands', function ($routes) {
+    $routes->cli('pokemon', 'CommandController::Pokemon', ['namespace' => COMMAND_NAMESPACE]);
+    $routes->cli('feedVillena', 'CommandController::FeedVillena', ['namespace' => COMMAND_NAMESPACE]);
+});
+
+//-------------------------------------------
 
 //-----------------------------------------
 
